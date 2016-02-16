@@ -9,21 +9,21 @@ ip, port = server\getsockname!
 print "please telnet to localhost on port #{port}"
 
 while true
-	client = server\accept!
-	client\settimeout 10
+    client = server\accept!
+    client\settimeout 10
 
 
 
-	line = ""
+    line = ""
 
-	while line != "exit"
+    while line != "exit"
 
-		print "listening loop"
+        print "listening loop"
 
-		line, err = client\receive!
+        line, err = client\receive!
 
-		unless err
-			client\send (">>"..string.upper (line.."\n"))
-			print "received line: '#{line}'"
+        unless err
+            client\send (">>"..string.upper (line.."\n"))
+            print "received line: '#{line}'"
 
-	client\close!
+    client\close!
