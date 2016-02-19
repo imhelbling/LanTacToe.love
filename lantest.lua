@@ -1,13 +1,19 @@
 local socket = require("socket")
-local server = assert((socket.bind("*", 0)))
+local server = assert(socket.bind("*", 9999))
 local ip, port = server:getsockname()
 print("please telnet to localhost on port " .. tostring(port))
-while 1 do
+while true do
   local client = server:accept()
   client:settimeout(10)
-  local line, err = client:recieve()
-  if not (err) then
-    client:send((line .. "\n"))
+  local line = ""
+  while line ~= "exit" do
+    print("listening loop")
+    local err
+    line, err = client:receive()
+    if not (err) then
+      client:send((">>" .. string.upper((line .. "\n"))))
+      print("received line: '" .. tostring(line) .. "'")
+    end
   end
   client:close()
 end
