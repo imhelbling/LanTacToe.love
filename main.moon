@@ -1,11 +1,19 @@
+version = "v0.1"
+
 Board = require "lib.board"
-version = "v0.01"
+Cell = require "lib.cell"
+Button = require "lib.button"
+
+
+
 
 love.window.setTitle "LAN Tic-Tac-Toe (#{version})"
 window_width, window_height, flags = love.window.getMode!
 -- window is currently 800 wide by 600 high
 
 player_piece = "o"
+
+turn = "o"
 
 
 
@@ -18,9 +26,57 @@ mouse_x, mouse_y = love.mouse.getPosition!
 
 export board = Board board_pos_x, board_pos_y, board_size
 
+export mute_music_btn = Button "mute music", (window_width - 117), (window_height - 80), 82, 20
+
+export mute_sfx_btn = Button "mute sfx", (window_width - 100), (window_height - 50), 65, 20
+
 x_wins = false
 o_wins = false
 
+airhorn_played = false
+
+
+
+music = love.audio.newSource "audio/clair_delune.mp3", "stream"
+
+click = love.audio.newSource "audio/click1.mp3", "static"
+click\setVolume 0.5
+
+airhorn = love.audio.newSource "audio/airhorn.mp3", "static"
+airhorn\setVolume 0.3
+
+reset = ->
+    airhorn\stop!
+    x_wins = false
+    o_wins = false
+    airhorn_played = false
+    board.a1.has_x = false
+    board.a2.has_x = false
+    board.a3.has_x = false
+    board.b1.has_x = false
+    board.b2.has_x = false
+    board.b3.has_x = false
+    board.c1.has_x = false
+    board.c2.has_x = false
+    board.c3.has_x = false
+    board.a1.has_o = false
+    board.a2.has_o = false
+    board.a3.has_o = false
+    board.b1.has_o = false
+    board.b2.has_o = false
+    board.b3.has_o = false
+    board.c1.has_o = false
+    board.c2.has_o = false
+    board.c3.has_o = false
+    board.a1.has_piece = false
+    board.a2.has_piece = false
+    board.a3.has_piece = false
+    board.b1.has_piece = false
+    board.b2.has_piece = false
+    board.b3.has_piece = false
+    board.c1.has_piece = false
+    board.c2.has_piece = false
+    board.c3.has_piece = false
 
 
 get_cell_for = (given_cell) ->
@@ -104,24 +160,53 @@ check_for_winner = ->
 check_cell = (given_cell) ->
     cell = get_cell_for given_cell
     if (moused_over given_cell) and (left_clicked!)
+        
+        unless cell.has_piece
+            click\stop!
+            click\play!
+
         love.graphics.print "left-clicked on cell "..given_cell, 100, 40
         
-        if player_piece == "x"
+        if (player_piece) == "x" and not cell.has_piece
+            cell.has_piece = true
+            cell.has_o = false
             cell.has_x = true
-        elseif player_piece == "o"
+        elseif (player_piece) == "o" and not cell.has_piece
+            cell.has_piece = true
+            cell.has_x = false
             cell.has_o = true
+
     if (moused_over given_cell) and (right_clicked!)
+
+        unless cell.has_piece
+            click\stop!
+            click\play!
+
         love.graphics.print "right-clicked on cell "..given_cell, 100, 40
         
-        if player_piece == "x"
+        if (player_piece) == "x" and not cell.has_piece
+            cell.has_piece = true
+            cell.has_x = false
             cell.has_o = true
-        elseif player_piece == "o"
+        elseif (player_piece) == "o" and not cell.has_piece
+            cell.has_piece = true
+            cell.has_o = false
             cell.has_x = true
 
+    
 
+
+love.load = ->
+    music\play!
 
 love.update = (dt) ->
     mouse_x, mouse_y = love.mouse.getPosition!
+
+    if (mute_music_btn\moused_over mouse_x, mouse_y) and left_clicked!
+        if mute_music_btn.pressed = false
+            mute_music_btn.pressed = true
+        else 
+            mute_music_btn.pressed = false
 
     unless x_wins or o_wins        
         check_cell "a1"
@@ -137,35 +222,19 @@ love.update = (dt) ->
         check_for_winner!
 
     if love.keyboard.isDown "space"
-        x_wins = false
-        o_wins = false
-
-        board.a1.has_x = false
-        board.a2.has_x = false
-        board.a3.has_x = false
-
-        board.b1.has_x = false
-        board.b2.has_x = false
-        board.b3.has_x = false
-
-        board.c1.has_x = false
-        board.c2.has_x = false
-        board.c3.has_x = false
+        reset!
 
 
-        board.a1.has_o = false
-        board.a2.has_o = false
-        board.a3.has_o = false
 
-        board.b1.has_o = false
-        board.b2.has_o = false
-        board.b3.has_o = false
+    if (x_wins or o_wins) and not airhorn_played
+        airhorn\stop!
+        airhorn\play!
+        airhorn_played = true
 
-        board.c1.has_o = false
-        board.c2.has_o = false
-        board.c3.has_o = false
+
 
 love.draw = ->
+    love.graphics.setBackgroundColor 5, 5, 5
     love.graphics.setColor 255, 255, 255
 
     -- window outline
@@ -179,6 +248,13 @@ love.draw = ->
     love.graphics.print "cursor x: "..mouse_x, 10, 50
     love.graphics.print "cursor y: "..mouse_y, 10, 65
 
+
+
+    -- mute music buttom
+    mute_music_btn\draw!
+
+    -- mute sfx button
+    mute_sfx_btn\draw!
 
 
     if x_wins

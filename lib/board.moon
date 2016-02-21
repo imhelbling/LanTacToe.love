@@ -8,6 +8,7 @@ class Board
 		@a1 = {
 			x: @x + (@size*1/6)
 			y: @y + (@size*1/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -15,6 +16,7 @@ class Board
 		@a2 = {
 			x: @x + (@size*3/6)
 			y: @y + (@size*1/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -22,6 +24,7 @@ class Board
 		@a3 = {
 			x: @x + (@size*5/6)
 			y: @y + (@size*1/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -31,6 +34,7 @@ class Board
 		@b1 = {
 			x: @x + (@size*1/6)
 			y: @y + (@size*3/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -38,6 +42,7 @@ class Board
 		@b2 = {
 			x: @x + (@size*3/6)
 			y: @y + (@size*3/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -45,6 +50,7 @@ class Board
 		@b3 = {
 			x: @x + (@size*5/6)
 			y: @y + (@size*3/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -54,6 +60,7 @@ class Board
 		@c1 = {
 			x: @x + (@size*1/6)
 			y: @y + (@size*5/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -61,6 +68,7 @@ class Board
 		@c2 = {
 			x: @x + (@size*3/6)
 			y: @y + (@size*5/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}
@@ -68,6 +76,7 @@ class Board
 		@c3 = {
 			x: @x + (@size*5/6)
 			y: @y + (@size*5/6)
+			has_piece: false
 			has_x: false
 			has_o: false
 		}

@@ -70,54 +70,63 @@ do
       self.a1 = {
         x = self.x + (self.size * 1 / 6),
         y = self.y + (self.size * 1 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.a2 = {
         x = self.x + (self.size * 3 / 6),
         y = self.y + (self.size * 1 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.a3 = {
         x = self.x + (self.size * 5 / 6),
         y = self.y + (self.size * 1 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.b1 = {
         x = self.x + (self.size * 1 / 6),
         y = self.y + (self.size * 3 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.b2 = {
         x = self.x + (self.size * 3 / 6),
         y = self.y + (self.size * 3 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.b3 = {
         x = self.x + (self.size * 5 / 6),
         y = self.y + (self.size * 3 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.c1 = {
         x = self.x + (self.size * 1 / 6),
         y = self.y + (self.size * 5 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.c2 = {
         x = self.x + (self.size * 3 / 6),
         y = self.y + (self.size * 5 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
       self.c3 = {
         x = self.x + (self.size * 5 / 6),
         y = self.y + (self.size * 5 / 6),
+        has_piece = false,
         has_x = false,
         has_o = false
       }
